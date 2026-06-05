@@ -37,7 +37,7 @@ class perceptron
         return z;
     }
 
-    public static double[] activation_function(double[] z)
+    public static double[] linear_activation_function(double[] z)
     {
         double[] activated = new double[z.length];
         for(int zeile = 0; zeile < z.length; zeile++)
@@ -53,6 +53,7 @@ class perceptron
         }
         return activated;
     }
+
 
     public static void weigthed_sum(int z)
     {
@@ -77,7 +78,7 @@ class perceptron
     }
 
 
-    public static double[] backpropagation_weights(double[][] inputs, double[] weights, double bias, double learningrate, double[] expected_value, double[] output_activation_function)
+    public static double[] linear_pagation_weights(double[][] inputs, double[] weights, double bias, double learningrate, double[] expected_value, double[] output_activation_function)
     {
         double[] fehlervektor = new double[expected_value.length];
         double[] fehler_mal_input = new double[weights.length];
@@ -109,7 +110,7 @@ class perceptron
         return fehler_mal_learningrate; // equal to updated weights
     }
 
-    public static double backpropagation_bias(double[][] inputs, double[] weights, double bias, double learningrate, double[] expected_value, double[] output_activation_function)
+    public static double linear_pagation_bias(double[][] inputs, double[] weights, double bias, double learningrate, double[] expected_value, double[] output_activation_function)
     {
         //bias = bias + learningrate * (expected_value[i] - output_activation_function);
 
