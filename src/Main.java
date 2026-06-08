@@ -11,7 +11,7 @@ public class Main {
 
 
 
-        ArrayList<Double> expected_values = new ArrayList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0));
+        ArrayList<Double> expected_values = new ArrayList<>(Arrays.asList(1.0, 1.0, 1.0));
         double learningrate = 0.1;
 
         //-----------------activation first tiefenlayer-------------------------------------------------------------//
@@ -70,7 +70,7 @@ public class Main {
 
         //-------------------aktivations last layer-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Intermediate_layer intermediateLayer_3 = new Intermediate_layer(1, intermediateLayer_2); // erstellt die zweite Tiefenschicht
+        Intermediate_layer intermediateLayer_3 = new Intermediate_layer(3, intermediateLayer_2); // erstellt die zweite Tiefenschicht
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -88,8 +88,10 @@ public class Main {
 
         //-------------------aktivations second layer-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
-
-
+        //-------------------loss berechnen-----------------------------------------------------------------------------------------------------------//
+        Loss_Function loss = new Loss_Function();
+        loss.binary_cross_entropy(intermediateLayer_3.number_of_neurons, activation_for_intermediateLayer_3.activations_for_neurons, expected_values);
+        //--------------------------------------------------------------------------------------------------------------------------------------------//
 
 
 
