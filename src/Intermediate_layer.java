@@ -7,8 +7,8 @@ public class Intermediate_layer {
     Intermediate_layer intermediateLayer;
     ArrayList<Double> inner_list = new ArrayList<>();
     ArrayList<ArrayList<ArrayList<Double>>> neuron_list = new ArrayList<>();
-    ArrayList<Neuron> neuron = new ArrayList<>();
-    ArrayList<Neuron> neurons = new ArrayList<>();
+    ArrayList<Double> bias_list = new ArrayList<>();
+
 
 
     Intermediate_layer(int number_of_neurons, Input_layer inputLayer)
@@ -27,6 +27,7 @@ public class Intermediate_layer {
                 initialize_weights.add(inner_list);
             }
 
+            bias_list.add(Math.random());
             neuron_list.add(initialize_weights);
 
         }
@@ -49,6 +50,7 @@ public class Intermediate_layer {
                 initialize_weights.add(inner_list);
             }
 
+            bias_list.add(Math.random());
             neuron_list.add(initialize_weights);
 
         }

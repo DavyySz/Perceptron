@@ -6,7 +6,7 @@ public class Main {
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        ArrayList<Double> inputs = new ArrayList<>(Arrays.asList(0.5, 0.3, 0.8, 0.4, 0.2, 0.7, 0.6, 0.3)); // Aktivierungen der Eingabeneuronen
+        ArrayList<Double> inputs = new ArrayList<>(Arrays.asList(0.5, 0.3, 0.8)); // Aktivierungen der Eingabeneuronen
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -70,7 +70,7 @@ public class Main {
 
         //-------------------aktivations last layer-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Intermediate_layer intermediateLayer_3 = new Intermediate_layer(3, intermediateLayer_2); // erstellt die zweite Tiefenschicht
+        Intermediate_layer intermediateLayer_3 = new Intermediate_layer(1, intermediateLayer_2); // erstellt die zweite Tiefenschicht
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 

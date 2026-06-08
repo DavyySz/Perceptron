@@ -32,7 +32,10 @@ public class Calc_weigthed_sum
 
         for(int neuron = 0; neuron < intermediate_layer.neuron_list.size(); neuron++)
         {
+
             System.out.println(weigthed_sum + "\n");
+            double bias_of_this_neuron = intermediate_layer.bias_list.get(neuron);
+            System.out.println("bias of neuron: " + neuron + " = " + bias_of_this_neuron + "\n");
 
             for(int weight = 0; weight < intermediate_layer.neuron_list.get(0).size(); weight++)
             {
@@ -59,12 +62,20 @@ public class Calc_weigthed_sum
 
                 System.out.println("Gewichtete Summe wird für das jeweilige Neuron aufaddiert: --> " + weigthed_sum + " + " + part_weigthed_sum + " = " + (weigthed_sum + part_weigthed_sum) + "\n");
 
+
                 weigthed_sum = weigthed_sum + part_weigthed_sum;
 
                 System.out.println("--------------------------------------------------\n");
             }
 
-            System.out.println("Gewichtete Summe für Neuron " + neuron + " = " + weigthed_sum);
+
+            System.out.println("weigthed_sum + bias: " + weigthed_sum + " + " + bias_of_this_neuron);
+
+            System.out.print("Gewichtete Summe für Neuron " + neuron + " = " + weigthed_sum + " + " + bias_of_this_neuron + " = ");
+
+            weigthed_sum = weigthed_sum + bias_of_this_neuron;
+
+            System.out.println(weigthed_sum);
 
 
             weights_of_this_layer.add(weigthed_sum); // Hier stehen die berechneten Gewichte drin
