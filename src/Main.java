@@ -11,7 +11,7 @@ public class Main {
 
 
 
-        ArrayList<Double> expected_values = new ArrayList<>(Arrays.asList(1.0, 1.0, 1.0));
+        ArrayList<Double> expected_values = new ArrayList<>(Arrays.asList(1.0, 1.0));
         double learningrate = 0.1;
 
         //-----------------activation first tiefenlayer-------------------------------------------------------------//
@@ -70,7 +70,7 @@ public class Main {
 
         //-------------------aktivations last layer-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Intermediate_layer intermediateLayer_3 = new Intermediate_layer(1, intermediateLayer_2); // erstellt die zweite Tiefenschicht
+        Intermediate_layer intermediateLayer_3 = new Intermediate_layer(2, intermediateLayer_2); // erstellt die zweite Tiefenschicht
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -93,6 +93,11 @@ public class Main {
         loss.binary_cross_entropy(intermediateLayer_3.number_of_neurons, activation_for_intermediateLayer_3.activations_for_neurons, expected_values);
         //--------------------------------------------------------------------------------------------------------------------------------------------//
 
+
+
+        ArrayList<ArrayList<Double>> delta_vorletzter_layer = Backpropagation.output_layer_binary_cross_entropy(activation_for_intermediateLayer_3, activation_for_intermediateLayer_2, intermediateLayer_3, intermediateLayer_3.number_of_neurons);
+        System.out.println("\n");
+        System.out.println(delta_vorletzter_layer);
 
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
