@@ -10,7 +10,7 @@ public class Activations_functions
             System.out.println("hier activation fürs " +  weigthed_sum_for_neuron + " neoron: \n");
             System.out.println("calc activation (SIGMOID) for neuron: " + weigthed_sum_for_neuron);
 
-            System.out.println("1.0 " + " / " + " ( " + " 1.0 " + " + " + " Math.exp( " + " - " + " weigthed_sum.get( " +  " - " + weigthed_sum.get(0).get(weigthed_sum_for_neuron) + " )))) ");
+            System.out.println("1.0 " + " / " + " ( " + " 1.0 " + " + " + " Math.exp( " + " ( " +  " - " + weigthed_sum.get(0).get(weigthed_sum_for_neuron) + " )) ");
 
             ArrayList<Double> calculation = new ArrayList<>();
 
