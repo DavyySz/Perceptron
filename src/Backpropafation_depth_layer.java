@@ -4,7 +4,7 @@ public class Backpropafation_depth_layer
 {
     double sum_of_weights_and_delta;
     double delta_of_this_neuron;
-    ArrayList<Double> delta_of_this_layer = new ArrayList<>();
+    ArrayList<ArrayList<Double>> delta_of_this_layer = new ArrayList<>();
 
     public Backpropafation_depth_layer(ArrayList<ArrayList<Double>> delta_for_neurons_der_letzten_berechneten_schicht, int anzahl_neuronen_der_Schicht_der_zuletzt_berechneten_deltas, int anzahl_neuronen_der_Schicht_fuer_die_die_deltas_berechnet_werden, Intermediate_layer neuronen_der_schicht_fuer_die_deltas_berechnet_wurden, Activations_functions aktivierung_der_schicht_fuer_die_delta_berechnet_wird)
     {
@@ -36,8 +36,12 @@ public class Backpropafation_depth_layer
 
                System.out.println(" = " + delta_of_this_neuron);
 
+               ArrayList<Double> d = new ArrayList<>();
+               d.add(delta_of_this_neuron);
+               this.delta_of_this_layer.add(d);
             }
         }
+        System.out.println(delta_of_this_layer);
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
     }
