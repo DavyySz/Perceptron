@@ -19,7 +19,7 @@ public class Main {
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Intermediate_layer intermediateLayer_1 = new Intermediate_layer(10, inputLayer); // erstellt die erste Tiefenschicht
+        Intermediate_layer intermediateLayer_1 = new Intermediate_layer(2, inputLayer); // erstellt die erste Tiefenschicht
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -48,7 +48,7 @@ public class Main {
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Intermediate_layer intermediateLayer_2 = new Intermediate_layer(10, intermediateLayer_1); // erstellt die zweite Tiefenschicht
+        Intermediate_layer intermediateLayer_2 = new Intermediate_layer(2, intermediateLayer_1); // erstellt die zweite Tiefenschicht
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -71,11 +71,11 @@ public class Main {
 
 
 
-        //-------------------aktivations last layer-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+        //-------------------aktivations 3 layer-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Intermediate_layer intermediateLayer_3 = new Intermediate_layer(10, intermediateLayer_2); // erstellt die zweite Tiefenschicht
+        Intermediate_layer intermediateLayer_3 = new Intermediate_layer(2, intermediateLayer_2); // erstellt die zweite Tiefenschicht
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -92,7 +92,7 @@ public class Main {
         activation_for_intermediateLayer_3.sigmoid(activations_for_neurons_tiefe_3);
 
 
-        //-------------------aktivations last layer-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+        //-------------------aktivations 3 layer-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 
 
@@ -101,7 +101,7 @@ public class Main {
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Intermediate_layer intermediateLayer_4 = new Intermediate_layer(10, intermediateLayer_3); // erstellt die zweite Tiefenschicht
+        Intermediate_layer intermediateLayer_4 = new Intermediate_layer(2, intermediateLayer_3); // erstellt die zweite Tiefenschicht
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -133,7 +133,9 @@ public class Main {
 
 
 
-        //-----------------------------Backpropagation weights letzten beiden Schichten--------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
+        //-----------------------------Backpropagation weights letzten 4 Schichten--------------------------------------------------------------------------------------------------------------------------------------------------------------------//
         Backpropagation_last_two_layers backpropagation_outputlayer_and_layer_before_it = new Backpropagation_last_two_layers(activation_for_intermediateLayer_4, activation_for_intermediateLayer_3, intermediateLayer_4, intermediateLayer_3.number_of_neurons, expected_values);
 
         System.out.println("Delta Outputschicht   :    " + backpropagation_outputlayer_and_layer_before_it.loss_for_neurons_outputlayer);
@@ -147,13 +149,66 @@ public class Main {
 
 
         System.out.println("||||||||||||||||||||||||||||  deltas für Schicht 2 werden berechnt  |||||||||||||||||||||||||||| \n");
-        Backpropafation_depth_layer backpropagation_layer_2 = new Backpropafation_depth_layer(backpropagation_outputlayer_and_layer_before_it.loss_for_neurons_vorletzter_layer, intermediateLayer_3.number_of_neurons, intermediateLayer_2.number_of_neurons, intermediateLayer_3, activation_for_intermediateLayer_2);
+        Backpropafation_depth_layer delta_layer_2 = new Backpropafation_depth_layer(backpropagation_outputlayer_and_layer_before_it.loss_for_neurons_vorletzter_layer, intermediateLayer_3.number_of_neurons, intermediateLayer_2.number_of_neurons, intermediateLayer_3, activation_for_intermediateLayer_2);
 
 
 
         System.out.println("||||||||||||||||||||||||||||  deltas für Schicht 1 werden berechnt  |||||||||||||||||||||||||||| \n");
-        Backpropafation_depth_layer backpropagation_layer_1 = new Backpropafation_depth_layer(backpropagation_layer_2.delta_of_this_layer, intermediateLayer_2.number_of_neurons, intermediateLayer_1.number_of_neurons, intermediateLayer_2, activation_for_intermediateLayer_1);
+        Backpropafation_depth_layer delta_layer_1 = new Backpropafation_depth_layer(delta_layer_2.delta_of_this_layer, intermediateLayer_2.number_of_neurons, intermediateLayer_1.number_of_neurons, intermediateLayer_2, activation_for_intermediateLayer_1);
 
+
+
+        //---------------------------calc gradient--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        //---------------------------calc new biases--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        System.out.println("New biases for outputlayer");
+        ArrayList<ArrayList<Double>> new_biases_for_outputlayer = Gradient_Decent.gradient_for_bias(backpropagation_outputlayer_and_layer_before_it.loss_for_neurons_outputlayer, intermediateLayer_4.bias_list, learningrate);
+
+        System.out.println("New biases for layer 3");
+        ArrayList<ArrayList<Double>> new_biases_for_layer_3 = Gradient_Decent.gradient_for_bias(backpropagation_outputlayer_and_layer_before_it.loss_for_neurons_vorletzter_layer, intermediateLayer_3.bias_list, learningrate);
+
+        System.out.println("New biases for layer 2");
+        ArrayList<ArrayList<Double>> new_biases_for_layer_2 = Gradient_Decent.gradient_for_bias(delta_layer_2.delta_of_this_layer, intermediateLayer_2.bias_list, learningrate);
+
+        System.out.println("New biases for layer 1");
+        ArrayList<ArrayList<Double>> new_biases_for_layer_1 = Gradient_Decent.gradient_for_bias(delta_layer_1.delta_of_this_layer, intermediateLayer_1.bias_list, learningrate);
+
+        System.out.println("new biases layer 4 (outputlayer): " + new_biases_for_outputlayer + "\n");
+        System.out.println("new biases layer 3: " + new_biases_for_layer_3 + "\n");
+        System.out.println("new biases layer 2: " + new_biases_for_layer_2 + "\n");
+        System.out.println("new biases layer 1: " + new_biases_for_layer_1 + "\n");
+        //---------------------------calc new biases--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+        //---------------------------calc new weights outputlayer--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        ArrayList<ArrayList<Double>> new_weights_for_outputlayer = Gradient_Decent.gradient_for_weight(backpropagation_outputlayer_and_layer_before_it.loss_for_neurons_outputlayer, intermediateLayer_4.neuron_list, activation_for_intermediateLayer_3, learningrate);
+        System.out.println("new weights for layer 4 (outputlayer): " + new_weights_for_outputlayer);
+        //---------------------------calc new weights outputlayer--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //---------------------------calc new weights layer 3--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        ArrayList<ArrayList<Double>> new_weights_for_layer_3 = Gradient_Decent.gradient_for_weight(backpropagation_outputlayer_and_layer_before_it.loss_for_neurons_vorletzter_layer, intermediateLayer_3.neuron_list, activation_for_intermediateLayer_2, learningrate);
+        System.out.println("new weights for layer 3: " + new_weights_for_layer_3);
+        //---------------------------calc new weights layer 3--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //---------------------------calc new weights layer 2--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        ArrayList<ArrayList<Double>> new_weights_for_layer_2 = Gradient_Decent.gradient_for_weight(delta_layer_2.delta_of_this_layer, intermediateLayer_2.neuron_list, activation_for_intermediateLayer_1, learningrate);
+        System.out.println("new weights for layer 2: " + new_weights_for_layer_2);
+        //---------------------------calc new weights layer 2--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //---------------------------calc new weights layer 2--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        ArrayList<ArrayList<Double>> new_weights_for_layer_1 = Gradient_Decent.gradient_for_weight(delta_layer_1.delta_of_this_layer, intermediateLayer_1.neuron_list, inputs, learningrate);
+        System.out.println("new weights for layer 1: " + new_weights_for_layer_1);
+        //---------------------------calc new weights layer 2--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+        activations_for_neurons.add(new_weights_for_outputlayer);
+
+
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
         //
 
