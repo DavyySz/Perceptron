@@ -20,7 +20,7 @@ public class Backpropafation_depth_layer
                 System.out.println("weight vom Neuron " + neuron_aus_der_schicht_fuer_die_delta_schon_berechnet_wurde + " fuer das Delta schon berechnet wurde, hinzu Neuron " + neuron_aus_der_schicht_fuer_die_delta_berechnet_wird + " fuer das Delta jetzt berechnet wird = " + weight);
 
                 double delta = delta_for_neurons_der_letzten_berechneten_schicht.get(neuron_aus_der_schicht_fuer_die_delta_schon_berechnet_wurde).get(0);
-                System.out.println("Delta fuer das akzuelle Neuron " + neuron_aus_der_schicht_fuer_die_delta_schon_berechnet_wurde + " was mit den Gewichten multipliziert wird = " + delta);
+                    System.out.println("Delta fuer das akzuelle Neuron " + neuron_aus_der_schicht_fuer_die_delta_schon_berechnet_wurde + " was mit den Gewichten multipliziert wird = " + delta);
 
                 System.out.println("\n");
 

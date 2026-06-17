@@ -30,6 +30,7 @@ public class Gradient_Decent
 
         for(int neuron = 0; neuron < neurons_of_outputlayer.size(); neuron++)
         {
+            ArrayList<Double> new_weight_ = new ArrayList<>();
             for(int neuron_layer_before = 0; neuron_layer_before < activation_layer_before.activations_for_neurons.size(); neuron_layer_before++)
             {
                 System.out.print("gradient Delta " + neuron + " to activation " + neuron_layer_before + " -----> " + each_delta_for_each_neuron.get(neuron).get(0) + " * " + activation_layer_before.activations_for_neurons.get(neuron_layer_before).get(0));
@@ -45,11 +46,9 @@ public class Gradient_Decent
                 double  new_weight = weight_to_adjust - (leraningrate * gradient);
                 System.out.println(" = " + new_weight);
                 System.out.println("\n");
-                ArrayList<Double> new_weight_ = new ArrayList<>();
                 new_weight_.add(new_weight);
-                new_weights.add(new_weight_);
             }
-
+            new_weights.add(new_weight_);
             System.out.println("------------------------------------------------------------------------------------------------------------------------------------------\n");
         }
         return new_weights;
@@ -68,6 +67,7 @@ public class Gradient_Decent
 
         for(int neuron = 0; neuron < neurons_of_outputlayer.size(); neuron++)
         {
+            ArrayList<Double> new_weight_ = new ArrayList<>();
             for(int neuron_layer_before = 0; neuron_layer_before < activation_layer_before.size(); neuron_layer_before++)
             {
                 System.out.print("gradient Delta " + neuron + " to activation " + neuron_layer_before + " -----> " + each_delta_for_each_neuron.get(neuron).get(0) + " * " + activation_layer_before.get(neuron_layer_before));
@@ -83,11 +83,9 @@ public class Gradient_Decent
                 double  new_weight = weight_to_adjust - (leraningrate * gradient);
                 System.out.println(" = " + new_weight);
                 System.out.println("\n");
-                ArrayList<Double> new_weight_ = new ArrayList<>();
                 new_weight_.add(new_weight);
-                new_weights.add(new_weight_);
             }
-
+            new_weights.add(new_weight_);
             System.out.println("------------------------------------------------------------------------------------------------------------------------------------------\n");
         }
         return new_weights;

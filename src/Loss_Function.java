@@ -32,6 +32,6 @@ public class Loss_Function
         System.out.println("Schritt 2 Summe durch anzahl der Endneuronen teilen\n");
         System.out.print(sum + " / " + sum_of_output_neurons);
         sum_divided_by_the_number_of_endoneurones = sum / sum_of_output_neurons;
-        System.out.println(" = " + sum_divided_by_the_number_of_endoneurones);
+        System.out.println(" = " + " ^^^^^^^^^^^^^^^^ " + sum_divided_by_the_number_of_endoneurones + " ^^^^^^^^^^^^^^^^ ");
     }
 }

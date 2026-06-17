@@ -27,4 +27,5 @@ public class Activations_functions
             activations_for_neurons.add(calculation);
         }
     }
+
 }
