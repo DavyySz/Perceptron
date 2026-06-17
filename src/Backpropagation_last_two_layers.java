@@ -10,8 +10,8 @@ public class Backpropagation_last_two_layers
     public Backpropagation_last_two_layers(Activations_functions activation_for_intermediateLayer_output, Activations_functions activation_for_intermediateLayer_vorletzte,  Intermediate_layer intermediate_layer, double anzahl_neuronen_vorletzte_schicht, ArrayList<Double> expected_values)
     {
         double activations_neuron_eine_schicht_weiter_innen = 0;
-        System.out.println("\n");
-        System.out.println("Anzahl Neuronen vorletzte Schicht = " + anzahl_neuronen_vorletzte_schicht + "\n");
+        //System.out.println("\n");
+        //System.out.println("Anzahl Neuronen vorletzte Schicht = " + anzahl_neuronen_vorletzte_schicht + "\n");
 
         double part_of_sum = 0;
         this.loss_for_neurons_outputlayer = new ArrayList<>();
@@ -23,8 +23,8 @@ public class Backpropagation_last_two_layers
         {
 
 
-            System.out.println("\n");
-            System.out.println("Berechne Delta für Neuron Nr. " + neuron_vorletzte_schicht + " der vorletzten Schicht \n");
+            //System.out.println("\n");
+            //System.out.println("Berechne Delta für Neuron Nr. " + neuron_vorletzte_schicht + " der vorletzten Schicht \n");
             ArrayList<Double> neuron = new ArrayList<>();
 
 
@@ -49,9 +49,9 @@ public class Backpropagation_last_two_layers
 
 
 
-                System.out.println("\n");
+                //System.out.println("\n");
 
-                System.out.println("delta für outputneuron " + output_neuron + " ---> " + activation_for_intermediateLayer_output.activations_for_neurons.get(output_neuron).get(0) + " - " + expected_values.get(output_neuron) + " = " + " <<<<< " + delta + " >>>>> ");
+                //System.out.println("delta für outputneuron " + output_neuron + " ---> " + activation_for_intermediateLayer_output.activations_for_neurons.get(output_neuron).get(0) + " - " + expected_values.get(output_neuron) + " = " + " <<<<< " + delta + " >>>>> ");
 
                 ArrayList<Double> neuron_output_layer = new ArrayList<>();
                 neuron_output_layer.add(delta);
@@ -68,20 +68,20 @@ public class Backpropagation_last_two_layers
 
 
 
-                System.out.println("weight für outputneuron " + output_neuron + " ---> " + weight + "\n");
+                //System.out.println("weight für outputneuron " + output_neuron + " ---> " + weight + "\n");
 
 
-                System.out.print("part_of_sum = " + part_of_sum + " + " + delta + " * " + weight );
+                //System.out.print("part_of_sum = " + part_of_sum + " + " + delta + " * " + weight );
                 part_of_sum = part_of_sum + delta * weight;
-                System.out.println(" = " + part_of_sum);
+                //System.out.println(" = " + part_of_sum);
 
 
             }
 
             wiederholungsvariable = false;
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            //System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
-            System.out.println(part_of_sum + " * " + activations_neuron_eine_schicht_weiter_innen + " * " + " (1 - " + activations_neuron_eine_schicht_weiter_innen + ")");
+            //System.out.println(part_of_sum + " * " + activations_neuron_eine_schicht_weiter_innen + " * " + " (1 - " + activations_neuron_eine_schicht_weiter_innen + ")");
 
 
 
@@ -98,7 +98,7 @@ public class Backpropagation_last_two_layers
 
 
 
-            System.out.println("Für Neuron " + neuron_vorletzte_schicht + " ist das delta = " + part_of_sum);
+            //System.out.println("Für Neuron " + neuron_vorletzte_schicht + " ist das delta = " + part_of_sum);
             neuron.add(part_of_sum);
 
 
@@ -106,7 +106,7 @@ public class Backpropagation_last_two_layers
 
 
             part_of_sum = 0;
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            //System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         }
 
     }

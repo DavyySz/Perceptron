@@ -6,15 +6,16 @@ public class NeuralNetwork {
     private ArrayList<Intermediate_layer> layers = new ArrayList<>();
     private double learningrate;
     private ArrayList<String> lossHistory = new ArrayList<>();
+    double the_accuracy_at_which_the_process_is_terminated;
 
     // ----------------------------------------------------------------
     // Konstruktor
     // Beispiel: new NeuralNetwork(2, new int[]{4, 4, 1}, 0.1)
     //           = 2 Inputs -> 4 -> 4 -> 1 Output
     // ----------------------------------------------------------------
-    public NeuralNetwork(int num_inputs, int[] layer_sizes, double learningrate) {
+    public NeuralNetwork(int num_inputs, int[] layer_sizes, double learningrate, double the_accuracy_at_which_the_process_is_terminated) {
         this.learningrate = learningrate;
-
+        this.the_accuracy_at_which_the_process_is_terminated = the_accuracy_at_which_the_process_is_terminated;
         ArrayList<Double> dummyInput = new ArrayList<>();
         for (int i = 0; i < num_inputs; i++) dummyInput.add(0.0);
         inputLayer = new Input_layer(dummyInput);
@@ -152,6 +153,12 @@ public class NeuralNetwork {
             if ((epoch + 1) % log_every == 0) {
                 double avg = totalLoss / inputs.size();
                 lossHistory.add(String.format("Epoch %6d | Avg Loss: %.8f", epoch + 1, avg));
+
+
+                if (avg < the_accuracy_at_which_the_process_is_terminated) {
+                    System.out.println("Early stopping bei Epoche " + (epoch + 1) + " (Loss: " + avg + ")");
+                    break;
+                }
             }
         }
     }
