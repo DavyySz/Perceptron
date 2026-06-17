@@ -22,12 +22,12 @@ public class Intermediate_layer {
             for(int weight = 0; weight < inputLayer.input.size(); weight++)
             {
                 inner_list = new ArrayList<>();
-                inner_list.add(Math.random());
+                inner_list.add((Math.random() * 2.0 - 1.0) * 0.5);
 
                 initialize_weights.add(inner_list);
             }
 
-            bias_list.add(Math.random());
+            bias_list.add((Math.random() * 2.0 - 1.0) * 0.5);
             neuron_list.add(initialize_weights);
 
         }
@@ -45,12 +45,12 @@ public class Intermediate_layer {
             for(int weight = 0; weight < intermediateLayer.number_of_neurons; weight++)
             {
                 inner_list = new ArrayList<>();
-                inner_list.add(Math.random());
+                inner_list.add((Math.random() * 2.0 - 1.0) * 0.5);
 
                 initialize_weights.add(inner_list);
             }
 
-            bias_list.add(Math.random());
+            bias_list.add((Math.random() * 2.0 - 1.0) * 0.5);
             neuron_list.add(initialize_weights);
 
         }
