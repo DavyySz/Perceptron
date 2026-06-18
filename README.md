@@ -68,8 +68,14 @@ W(l) ← W(l) - η * δ(l) * a(l-1)^T
 ```
 neural-network-java/
 ├── README.md
+├── docs/
+│   ├── Backpropagation.pdf
+│   ├── Backpropagation-1.pdf
+│   ├── Gewichtsmatrix.pdf
+│   ├── ij.pdf
+│   └── Matrix.pdf
 ├── src/
-│   ├── NeuralNetwork.java          ← Hauptklasse, hier starten
+│   ├── NeuralNetwork.java
 │   ├── Input_layer.java
 │   ├── Intermediate_layer.java
 │   ├── Calc_weigthed_sum.java
@@ -80,11 +86,9 @@ neural-network-java/
 │   └── Update_biases.java
 └── examples/
     ├── Main_01_XOR.java
-    ├── Main_02_Paritaet.java
-    ├── Main_03_SiebenSegment.java
-    ├── Main_04_Temperatur.java
-    ├── Main_05_MiniMNIST.java
-    └── Main_06_3DCluster.java
+    ├── Main_02_Temperatur.java
+    ├── Main_03_MiniMNIST.java
+    └── Main_04_3DCluster.java
 ```
 
 ---
@@ -112,51 +116,26 @@ net.printLossHistory();
 
 ### 1. XOR
 Das klassische nicht-linear trennbare Problem — braucht mindestens eine Hidden Layer.  
-Konvergiert bei ~3000–5000 Epochen.
 
-### 2. 4-Bit Parität
-Output = 1 wenn die Anzahl der Einsen gerade ist. Alle 16 Kombinationen.  
-Historisch bekannt als schwieriges Problem (Minsky & Papert, 1969).  
-Spektakulärer Loss-Verlauf: zwei lokale Minima, zwei Ausbrüche, Konvergenz bei Epoche ~217.000.
 
-```
-Epoch   1000: Loss 0.7058  ← lokales Minimum
-Epoch 136000: Loss 0.6627  ← erster Ausbruch
-Epoch 141000: Loss 0.1829  ← zweites Minimum
-Epoch 212000: Loss 0.0104  ← zweiter Ausbruch
-Epoch 217000: Loss 0.0010  ← Early Stopping ✓
-```
 
-### 3. Sieben-Segment-Anzeige
-4-Bit Input → 7 simultane Outputs (Segmente a–g für Ziffern 0–9).  
-10/10 korrekt in nur 1000 Epochen — weil 7 unabhängige einfache Funktionen gleichzeitig gelernt werden.
-
-### 4. Temperaturklassifikation
+### 2. Temperaturklassifikation
 Erster kontinuierlicher Input (normalisierte Temperatur).  
 Output: [kalt, warm, heiß] — das Netz lernt Entscheidungsgrenzen auf einer Zahlengeraden.  
 Testet Generalisierung auf unbekannte Temperaturen.
 
-### 5. Mini-MNIST (5×5 Pixel)
+### 3. Mini-MNIST (5×5 Pixel)
 25 Inputs, 10 Outputs, 110 Trainingsbeispiele (11 Varianten pro Ziffer).  
 100% Trainingsgenauigkeit, 80% auf komplett unbekannten Testbildern.  
 Echte Bildklassifikation ohne Bibliotheken.
 
-### 6. 3D Punktwolken
+### 4. 3D Punktwolken
 3 kontinuierliche Inputs (x, y, z), 4 Cluster in Würfelecken.  
 Testet geometrische Klassifikation im kontinuierlichen Raum.  
 Der Mittelpunkt (0.5, 0.5, 0.5) hat absichtlich keine richtige Antwort — niedrige Konfidenz dort ist das korrekte Verhalten.
 
 ---
 
-## Interessante Beobachtungen
-
-**Lokale Minima:** Das 4-Bit Paritätsproblem zeigt eindrücklich wie Gradient Descent in lokalen Minima feststecken kann und sich durch akkumulierte kleine Schritte selbst befreit — ohne dass von außen eingegriffen wird.
-
-**Warum Sieben-Segment schnell ist:** 7 unabhängige Binärfunktionen. Warum Parität langsam ist: globale Eigenschaft aller Bits gleichzeitig — strukturell viel schwerer.
-
-**Xavier-ähnliche Initialisierung:** `(Math.random() * 2.0 - 1.0) * 0.5` wurde intuitiv entdeckt — symmetrisch um 0, klein genug um Vanishing Gradients zu vermeiden.
-
----
 
 ## Nächste Schritte (Projektvorschlag)
 
@@ -173,4 +152,4 @@ Der Mittelpunkt (0.5, 0.5, 0.5) hat absichtlich keine richtige Antwort — niedr
 
 ---
 
-*Projekt von Daniel Stein — TH [Name einfügen], [Kursname einfügen], [Semester]*
+*Projekt von Daniel Stein*
