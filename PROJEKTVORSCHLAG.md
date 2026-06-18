@@ -1,8 +1,7 @@
 # Projektvorschlag: Tic-Tac-Toe KI mit eigenem Neural Network Framework
 
 **Student:** Daniel Stein  
-**Kurs:** [Kursname]  
-**Betreuer:** [Name des Profs]
+
 
 ---
 
@@ -41,17 +40,46 @@ Output: 9 Neuronen [Wahrscheinlichkeit für jeden möglichen Zug]
 
 ---
 
-## Transparenz zum bisherigen Prozess
 
-KI-Tools wurden als Lernwerkzeug eingesetzt:
-- Konzepte erklären und Formelblätter generieren
-- Eigene Rechnungen und Debug-Logs überprüfen lassen
+---
+
+## Transparenz: Was selbst implementiert wurde
+
+### Kernlogik — selbst geschrieben
+
+| Klasse | Inhalt |
+|--------|--------|
+| `Input_layer.java` | Speichert den Input-Vektor |
+| `Intermediate_layer.java` | Neuronen, Gewichte, Bias, Xavier-ähnliche Initialisierung |
+| `Calc_weigthed_sum.java` | Forward Pass — berechnet gewichtete Summen |
+| `Activations_functions.java` | Sigmoid-Aktivierungsfunktion |
+| `Loss_Function.java` | Binary Cross Entropy Loss |
+| `Gradient_Decent.java` | Berechnet neue Gewichte und Biases |
+| `Update_weights.java` | Schreibt neue Gewichte zurück (Bug eigenständig identifiziert) |
+| `Update_biases.java` | Schreibt neue Biases zurück |
+
+KI kam bei der Kernlogik nur zum Einsatz um Konzepte zu erklären, Rechnungen zu überprüfen, Syntaxfehler und Bugs zu finden und zu fixen (in fast allen fällen selbst korrigiert).
+
+### Mit KI-Unterstützung entstanden
+
+| Datei                                 | Beschreibung |
+|---------------------------------------|--------------|
+| `NeuralNetwork.java`                  | Abstraktion des Frameworks — damit können beliebig große Netze mit einer einzigen Zeile erstellt werden, ohne hunderte Zeilen in der Main zu schreiben. Baut auf den selbst geschriebenen Klassen auf. |
+| `Main_00` bis `Main_04`               | Beispiel-Mains durch KI generiert um das Framework auf verschiedenen Problemen zu demonstrieren |
+| `README.md`, `FRAMEWORK_ANLEITUNG.md` | Durch KI generiert und von mir angepasst |
+| Formelblätter in `docs/`              | Durch KI generiert, von mir verstanden und als Referenz beim Implementieren benutzt |
+
+### Wie KI konkret eingesetzt wurde
+- Konzepte erklären (Backpropagation, Vanishing Gradient, lokale Minima)
+- Debug-Logs und eigene Rechnungen überprüfen lassen
 - Syntaxfehler finden
+- YouTube-Videos zum Verständnis ergänzend genutzt
+- Formelblätter als Referenz generieren lassen
 
-Den Code habe ich fast vollständig selbst geschrieben.
-Das mathematische Verständnis (Backpropagation, Gradient Descent,
-Loss-Funktionen) habe ich mir durch YouTube, generierte Formelblätter
-und eigenes Ausprobieren erarbeitet.
+### Zur Code-Qualität
+Da die Kernlogik fast ausschließlich selbst geschrieben wurde ist der Code nicht auf Effizienz optimiert — er spiegelt den Denkprozess wider, nicht eine fertige Bibliothek. Die `ArrayList<ArrayList<ArrayList<Double>>>` Datenstruktur ist langsamer als `double[][]` Arrays, macht aber den Aufbau des Netzes intuitiv sichtbar. Für die Lernziele dieses Projekts ist das ausreichend — PyTorch macht dieselbe Mathematik, nur als Matrizenoperationen auf GPU.
+
+---
 
 ---
 
@@ -75,4 +103,4 @@ Ich bin offen für Anpassungen des Umfangs oder der Anforderungen.
 
 ---
 
-*Daniel Stein — [Datum]*
+*Daniel Stein — [18.06.2026]*
