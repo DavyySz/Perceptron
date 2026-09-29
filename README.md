@@ -1,2 +1,7 @@
 Einfaches Perzeptron programmiert in Java
-- Der Code für die Berechnungen wurde von mir selbst geschrieben, jedoch kam KI für die Visualisierung und das Programmieren der GUI zum einsatz
+Starten:
+
+Terminal im Ordner src öffnen und folgende Befehle ausführen:
+
+javac --release 17 *.java 
+java Main
