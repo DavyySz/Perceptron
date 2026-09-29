@@ -1,4 +1,5 @@
 Einfaches Perzeptron programmiert in Java
+
 Starten:
 
 Terminal im Ordner src öffnen und folgende Befehle ausführen:
