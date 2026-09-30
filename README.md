@@ -210,12 +210,6 @@ Der Mittelpunkt (0.5, 0.5, 0.5) hat absichtlich keine richtige Antwort — niedr
 ---
 
 
-## Nächste Schritte (Projektvorschlag)
-
-- **Tic-Tac-Toe KI** trainiert mit diesem Framework (Supervised Learning via Minimax-Trainingsdaten)
-- **Weboberfläche** wo man gegen die KI spielen kann
-- Optional: Reinforcement Learning — das Netz lernt durch Spielen gegen sich selbst
-
 ---
 
 ## Anforderungen
