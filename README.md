@@ -50,13 +50,6 @@ Nicht mehr verwendet (Vorstufen, bevor die Backpropagation in `NeuralNetwork.jav
 
 Jede dieser Java-Dateien trägt einen entsprechenden Hinweis im Dateikopf.
 
-**Änderungen vom 30.09.2026 (mit Claude):**
-- `NeuralNetwork.predict()` gibt jetzt alle Output-Neuronen zurück (vorher nur das erste), `printPredictions()` funktioniert für beliebig viele Inputs und Outputs.
-- Klassennamen in drei Beispielen an die Dateinamen angepasst (kompilierten vorher nicht).
-- Aus README und Anleitung wurden alle Aussagen entfernt, die sich nicht aus Code oder Beispielen belegen lassen.
-
-**Wie KI eingesetzt wurde:**  
-KI wurde als Lernwerkzeug benutzt — zum Erklären von Konzepten, Generieren von Formelblättern, Überprüfen von Rechnungen und Logs, sowie Finden von Syntaxfehlern. Den Code der Kernlogik und das mathematische Verständnis habe ich mir selbst erarbeitet. Zusätzlich wurden viele Erklärvideos auf YouTube geschaut und eigene Formelblätter zur Backpropagation erstellt.
 
 ---
 
