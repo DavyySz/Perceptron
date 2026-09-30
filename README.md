@@ -34,7 +34,7 @@ Das Framework unterstützt:
 | `NeuralNetwork.java`         | Generischer Wrapper, Backprop-Schleife | 🤝 mit KI-Unterstützung                       |
 | `Main.java`                  | Erstellung des Netzes                  | 🤝 mit KI-Unterstützung
 **Wie KI eingesetzt wurde:**  
-KI wurde als Lernwerkzeug benutzt — zum Erklären von Konzepten, Generieren von Formelblättern, Überprüfen von Rechnungen und Logs, sowie Finden von Syntaxfehlern. Den Code und das mathematische Verständnis habe ich mir selbst erarbeitet. Zusätzlich wurden viele Erklärvideos auf YouTube geschaut und eigene Formelblätter zur Backpropagation erstellt. Die trainingsbeispiele wurden jedoch mit Hilfe von claude entworfen.
+KI wurde als Lernwerkzeug benutzt — zum Erklären von Konzepten, Generieren von Formelblättern, Überprüfen von Rechnungen und Logs, sowie Finden von Syntaxfehlern. Den Code und das mathematische Verständnis habe ich mir selbst erarbeitet. Zusätzlich wurden viele Erklärvideos auf YouTube geschaut und eigene Formelblätter zur Backpropagation erstellt. Die Trainingsbeispiele wurden jedoch mit Hilfe von claude entworfen.
 
 ---
 
