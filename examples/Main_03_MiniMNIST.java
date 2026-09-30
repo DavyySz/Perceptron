@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Main_05_MiniMNIST {
+public class Main_03_MiniMNIST {
     public static void main(String[] args) {
 
         // ============================================================

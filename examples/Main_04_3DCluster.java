@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Main_06_3DCluster {
+public class Main_04_3DCluster {
     public static void main(String[] args) {
 
         // ============================================================

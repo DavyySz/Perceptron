@@ -166,9 +166,15 @@ public class NeuralNetwork {
     // ----------------------------------------------------------------
     // Vorhersage
     // ----------------------------------------------------------------
-    public double predict(ArrayList<Double> input) {
+    // Gibt die Aktivierungen ALLER Output-Neuronen zurück
+    // (bei einem Output-Neuron also eine Liste mit einem Element)
+    public ArrayList<Double> predict(ArrayList<Double> input) {
         ArrayList<Activations_functions> activations = forward(input);
-        return activations.get(layers.size() - 1).activations_for_neurons.get(0).get(0);
+        ArrayList<Double> result = new ArrayList<>();
+        for (ArrayList<Double> neuron : activations.get(layers.size() - 1).activations_for_neurons) {
+            result.add(neuron.get(0));
+        }
+        return result;
     }
 
     // ----------------------------------------------------------------
@@ -184,15 +190,34 @@ public class NeuralNetwork {
     public void printPredictions(ArrayList<ArrayList<Double>> inputs,
                                  ArrayList<ArrayList<Double>> expected_values) {
         System.out.println("\nVORHERSAGEN:\n");
-        System.out.println("Input  | Expected | Predicted | Rounded");
-        System.out.println("-------|----------|-----------|----------");
+        System.out.println("Input | Expected | Predicted | Rounded");
+        System.out.println("------|----------|-----------|--------");
         for (int i = 0; i < inputs.size(); i++) {
-            double pred = predict(inputs.get(i));
-            int rounded = pred > 0.5 ? 1 : 0;
-            double exp = expected_values.get(i).get(0);
-            ArrayList<Double> in = inputs.get(i);
-            System.out.printf("[%.0f,%.0f] |   %.1f    |  %.4f   |    %d\n",
-                    in.get(0), in.get(1), exp, pred, rounded);
+            ArrayList<Double> pred = predict(inputs.get(i));
+            System.out.printf("%s | %s | %s | %s%n",
+                    format(inputs.get(i), "%.2f"),
+                    format(expected_values.get(i), "%.1f"),
+                    format(pred, "%.4f"),
+                    formatRounded(pred));
         }
+    }
+
+    // Hilfsfunktionen für die Ausgabe: Liste als [a, b, c] formatieren
+    private static String format(ArrayList<Double> values, String pattern) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < values.size(); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(String.format(pattern, values.get(i)));
+        }
+        return sb.append("]").toString();
+    }
+
+    private static String formatRounded(ArrayList<Double> values) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < values.size(); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(values.get(i) > 0.5 ? 1 : 0);
+        }
+        return sb.append("]").toString();
     }
 }
