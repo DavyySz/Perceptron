@@ -1,3 +1,11 @@
+// ============================================================
+// KI-KENNZEICHNUNG
+// Dieses Beispiel (Trainingsdaten, Aufbau, Ausgabe) wurde von
+// Claude generiert, um das selbst geschriebene Framework auf
+// einem konkreten Problem zu demonstrieren.
+// Siehe README.md → "Transparenz".
+// ============================================================
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;

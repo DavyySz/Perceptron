@@ -1,5 +1,9 @@
 # Framework-Anleitung — Neural Network Java
 
+> **KI-Kennzeichnung:** Diese Anleitung wurde von Claude generiert und von mir
+> angepasst. Am 30.09.2026 wurden alle Aussagen entfernt, die sich nicht aus dem
+> Code oder den Beispielen belegen lassen. Siehe README.md → "Transparenz".
+
 Diese Anleitung erklärt Schritt für Schritt wie das Framework benutzt wird,
 welche Parameter es gibt, und was bei häufigen Problemen zu tun ist.
 
@@ -46,8 +50,8 @@ Jeder Eintrag in `inputs` entspricht einem Trainingsbeispiel.
 Der Eintrag an derselben Position in `expected` ist die erwartete Ausgabe.
 
 **Wichtige Regeln:**
-- Alle Werte müssen zwischen 0.0 und 1.0 liegen
-- Kontinuierliche Werte (z.B. Temperaturen) müssen normalisiert werden
+- Erwartete Ausgaben müssen 0.0 oder 1.0 sein (Binary Cross Entropy Loss, Sigmoid-Output)
+- Kontinuierliche Inputs (z.B. Temperaturen) werden in den Beispielen auf 0.0 bis 1.0 normalisiert
 - `inputs.size()` muss gleich `expected.size()` sein
 
 **Beispiel — 1 Input, 1 Output (binär):**
@@ -99,34 +103,18 @@ Alle anderen Werte = Hidden Layer Größen.
 new int[]{4, 1}       // 1 Hidden Layer (4 Neuronen), 1 Output
 new int[]{8, 4, 1}    // 2 Hidden Layer, 1 Output
 new int[]{16, 8, 3}   // 2 Hidden Layer, 3 Outputs (z.B. 3 Klassen)
-new int[]{64, 32, 10} // größeres Netz für komplexere Probleme
 ```
 
-**Faustregel für die Netzgröße:**
-- Einfache binäre Probleme (AND, OR): `{4, 1}` reicht
-- Nicht-linear trennbar (XOR): mindestens `{4, 1}`
-- Mehrere Klassen: letzte Zahl = Anzahl Klassen
-- Bildklassifikation: deutlich größer, z.B. `{64, 32, 10}`
+Bei Mehrklassen-Problemen ist der letzte Wert die Anzahl der Klassen (One-Hot).
+Welche Größen in den Beispielen verwendet werden, steht in Abschnitt 8.
 
 ### learningrate
 Wie groß die Schritte beim Gradientenabstieg sind.
-
-| Wert | Effekt |
-|------|--------|
-| 0.01 | sehr langsam, sicher, selten lokale Minima |
-| 0.1  | gut für die meisten Probleme (Empfehlung) |
-| 0.5  | schnell aber kann oszillieren |
-| 1.0  | meist zu groß, Training divergiert |
+In den Beispielen werden 0.1 bis 0.2 verwendet.
 
 ### stop_threshold
-Training stoppt wenn `avg_loss < stop_threshold`.
-
-| Wert | Wann sinnvoll |
-|------|---------------|
-| 0.1  | schnelles Testen, grobe Ergebnisse |
-| 0.01 | gute Genauigkeit für die meisten Probleme |
-| 0.001| hohe Präzision, längeres Training |
-| 0.0001| sehr hohe Präzision, kann sehr lange dauern |
+Training stoppt, wenn `avg_loss < stop_threshold`.
+In den Beispielen werden Werte zwischen 0.001 und 0.05 verwendet.
 
 ---
 
@@ -137,21 +125,15 @@ net.train(
     ArrayList<ArrayList<Double>> inputs,
     ArrayList<ArrayList<Double>> expected,
     int epochs,      // maximale Epochenzahl
-    int log_every    // alle N Epochen wird geloggt
+    int log_every    // alle N Epochen wird geloggt und das Abbruchkriterium geprüft
 );
 ```
 
-**Empfohlene Werte:**
-
-| Problem | epochs | log_every |
-|---------|--------|-----------|
-| Einfach (AND, OR) | 10000 | 100 |
-| Mittel (XOR) | 100000 | 1000 |
-| Schwer (Parität) | 100000000 | 1000 |
-| Bildklassifikation | 100000000 | 1000 |
-
-Das Training stoppt automatisch früher wenn der Loss unter `stop_threshold` fällt
+Das Training stoppt automatisch früher, wenn der Loss unter `stop_threshold` fällt
 (Early Stopping). Die maximale Epochenzahl ist nur ein Sicherheitsnetz.
+
+**Hinweis:** Das Abbruchkriterium wird nur alle `log_every` Epochen geprüft.
+Ein größeres `log_every` kann das Training daher etwas verlängern.
 
 ---
 
@@ -193,56 +175,48 @@ System.out.println("Konfidenz: " + (result.get(bestIdx) * 100) + "%");
 ```java
 net.printPredictions(inputs, expected);
 ```
-Zeigt für jedes Trainingsbeispiel: Input, Erwarteter Output,
-Vorhergesagter Output, Gerundeter Output, Korrekt/Falsch.
+Zeigt für jedes Trainingsbeispiel: Input, erwarteter Output,
+vorhergesagter Output, gerundeter Output (Schwelle 0.5).
 
 ### printLossHistory
 ```java
 net.printLossHistory();
 ```
-Zeigt den Loss-Verlauf über alle geloggten Epochen.
-Ein gleichmäßig sinkender Verlauf bedeutet das Netz lernt gut.
+Zeigt den durchschnittlichen Loss aller geloggten Epochen.
 
 ---
 
 ## 7. Häufige Probleme
 
-### Loss stagniert bei ~0.69
-Das Netz ist im lokalen Minimum. Lösungen:
-- Training neu starten (Gewichte werden zufällig neu initialisiert)
-- Lernrate erhöhen (z.B. von 0.1 auf 0.2)
-- Netz größer machen
-
-### Loss sinkt aber Vorhersagen sind falsch
-Zu wenig Epochen oder stop_threshold zu hoch.
-Lösung: stop_threshold kleiner setzen (z.B. von 0.01 auf 0.001).
-
-### Training läuft sehr lange ohne Verbesserung
-Bei schwierigen Problemen (z.B. 4-Bit Parität) kann das Netz
-lange in lokalen Minima feststecken bevor es sich selbst befreit.
-Einfach warten — oder neu starten mit anderem Seed.
+### Loss bleibt bei ~0.69 stehen
+0.69 ≈ ln(2) ist der Binary-Cross-Entropy-Loss, wenn das Netz für alle
+Beispiele etwa 0.5 ausgibt, also nichts gelernt hat.
+Die Gewichte werden bei jedem Start zufällig initialisiert (`Math.random()`),
+ein Neustart liefert daher einen anderen Ausgangspunkt.
+Einen festen Seed gibt es im Framework nicht.
 
 ### Vorhersagen auf neuen Daten schlechter als auf Trainingsdaten
-Das Netz hat auswendig gelernt statt zu generalisieren.
-Lösungen:
-- Mehr und vielfältigere Trainingsdaten
-- Netz kleiner machen
-- stop_threshold erhöhen (weniger präzises Training)
+Im Beispiel `Main_03_MiniMNIST` erreicht das Netz 100 % auf den Trainingsdaten,
+aber nur 80 % auf unbekannten Testbildern. Das Netz generalisiert also nur teilweise.
 
-### Alle Vorhersagen sind ~0.5
-Netz konvergiert nicht. Lernrate zu klein oder Netz zu klein.
+### Ergebnisse unterscheiden sich von Lauf zu Lauf
+Wegen der zufälligen Initialisierung sind Epochenzahl bis zum Early Stopping
+und die Ausgaben bei uneindeutigen Eingaben (z.B. der Mittelpunkt in
+`Main_04_3DCluster`) bei jedem Lauf anders.
 
 ---
 
 ## 8. Beispiele nach Komplexität
 
-| Datei                     | Problem | Inputs | Outputs | Besonderheit |
-|---------------------------|---------|--------|---------|--------------|
-| `Main_00_Quickstart.java` | AND | 2 | 1 | Einstieg, linear trennbar |
-| `Main_01_XOR.java`        | XOR | 2 | 1 | Nicht-linear trennbar |
-| `Main_02_Temperatur.java` | Temperatur | 1 | 3 | Kontinuierlicher Input |
-| `Main_03_MiniMNIST.java`  | Ziffernerkennung | 25 | 10 | Bildklassifikation, Generalisierung |
-| `Main_04_3DCluster.java`  | 3D Punkte | 3 | 4 | Geometrische Klassifikation |
+| Datei                     | Problem | Inputs | Outputs | layer_sizes | learningrate | stop_threshold | Besonderheit |
+|---------------------------|---------|--------|---------|-------------|--------------|----------------|--------------|
+| `Main_00_Quickstart.java` | AND | 2 | 1 | `{4, 1}` | 0.1 | 0.001 | Einstieg, linear trennbar |
+| `Main_01_XOR.java`        | XOR | 2 | 1 | `{4, 1}` | 0.1 | 0.001 | Nicht-linear trennbar |
+| `Main_02_Temperatur.java` | Temperatur | 1 | 3 | `{8, 4, 3}` | 0.1 | 0.01 | Kontinuierlicher Input |
+| `Main_03_MiniMNIST.java`  | Ziffernerkennung | 25 | 10 | `{64, 32, 10}` | 0.1 | 0.05 | Bildklassifikation, Test auf unbekannten Bildern |
+| `Main_04_3DCluster.java`  | 3D Punkte | 3 | 4 | `{16, 8, 4}` | 0.1 | 0.01 | Geometrische Klassifikation |
+
+Lernrate 0.2 wird in `src/Main.java` (XOR) verwendet.
 
 ---
 
@@ -278,4 +252,4 @@ public class Main {
 
 ---
 
-*Framework entwickelt von Daniel Stein — TH [Name], [Kurs], [Semester]*
+*Framework entwickelt von Daniel Stein*

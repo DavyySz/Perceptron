@@ -24,7 +24,7 @@ Das Framework unterstützt:
 | Klasse                       | Inhalt                                 | Eigenanteil                                   |
 |------------------------------|----------------------------------------|-----------------------------------------------|
 | `Input_layer.java`           | Speichert den Input-Vektor             | ✅ selbst                                      |
-| `Intermediate_layer.java`    | Neuronen, Gewichte, Bias, Xavier-Init  | ✅ selbst                                      |
+| `Intermediate_layer.java`    | Neuronen, Gewichte, Bias (zufällig in [-0.5, 0.5]) | ✅ selbst                          |
 | `Calc_weigthed_sum.java`     | Forward Pass (gewichtete Summe)        | ✅ selbst                                      |
 | `Activations_functions.java` | Sigmoid                                | ✅ selbst                                      |
 | `Loss_Function.java`         | Binary Cross Entropy                   | ✅ selbst                                      |
@@ -32,9 +32,31 @@ Das Framework unterstützt:
 | `Update_weights.java`        | Schreibt neue Gewichte zurück          | 🤝   (bug wurde durch ki gefunden und gelöst) |
 | `Update_biases.java`         | Schreibt neue Biases zurück            | ✅ selbst                                      |
 | `NeuralNetwork.java`         | Generischer Wrapper, Backprop-Schleife | 🤝 mit KI-Unterstützung                       |
-| `Main.java`                  | Erstellung des Netzes                  | 🤝 mit KI-Unterstützung
+| `Main.java`                  | Erstellung des Netzes                  | 🤝 mit KI-Unterstützung                       |
+
+Nicht mehr verwendet (Vorstufen, bevor die Backpropagation in `NeuralNetwork.java` gewandert ist), selbst geschrieben:
+`Backpropagation_last_two_layers.java`, `Backpropafation_depth_layer.java`, `Neuron.java`
+
+**Vollständig oder überwiegend mit KI (Claude) erstellt:**
+
+| Datei / Ordner | Was | Eigenanteil |
+|---|---|---|
+| `src/NeuralNetwork.java` | Generischer Wrapper um die selbst geschriebenen Klassen, Trainingsschleife | Struktur und Backprop-Schleife mit KI; baut auf meinen Klassen auf |
+| `src/Main.java` | Aufbau eines Netzes | mit KI |
+| `examples/Main_00` bis `Main_04` | Trainingsdaten, Aufbau, Ausgabe der Beispiele | von KI generiert, von mir ausgeführt und geprüft |
+| `README.md` | diese Datei | von KI generiert, von mir angepasst |
+| `FRAMEWORK_ANLEITUNG.md` | Benutzungsanleitung | von KI generiert, von mir angepasst |
+| `docs/*.pdf` | Formelblätter zu Backpropagation und Matrizen | von KI generiert, von mir als Referenz beim Implementieren benutzt |
+
+Jede dieser Java-Dateien trägt einen entsprechenden Hinweis im Dateikopf.
+
+**Änderungen vom 30.09.2026 (mit Claude):**
+- `NeuralNetwork.predict()` gibt jetzt alle Output-Neuronen zurück (vorher nur das erste), `printPredictions()` funktioniert für beliebig viele Inputs und Outputs.
+- Klassennamen in drei Beispielen an die Dateinamen angepasst (kompilierten vorher nicht).
+- Aus README und Anleitung wurden alle Aussagen entfernt, die sich nicht aus Code oder Beispielen belegen lassen.
+
 **Wie KI eingesetzt wurde:**  
-KI wurde als Lernwerkzeug benutzt — zum Erklären von Konzepten, Generieren von Formelblättern, Überprüfen von Rechnungen und Logs, sowie Finden von Syntaxfehlern. Den Code und das mathematische Verständnis habe ich mir selbst erarbeitet. Zusätzlich wurden viele Erklärvideos auf YouTube geschaut und eigene Formelblätter zur Backpropagation erstellt. Die Trainingsbeispiele wurden jedoch mit Hilfe von claude entworfen.
+KI wurde als Lernwerkzeug benutzt — zum Erklären von Konzepten, Generieren von Formelblättern, Überprüfen von Rechnungen und Logs, sowie Finden von Syntaxfehlern. Den Code der Kernlogik und das mathematische Verständnis habe ich mir selbst erarbeitet. Zusätzlich wurden viele Erklärvideos auf YouTube geschaut und eigene Formelblätter zur Backpropagation erstellt.
 
 ---
 
@@ -69,7 +91,6 @@ W(l) ← W(l) - η * δ(l) * a(l-1)^T
 neural-network-java/
 ├── README.md
 ├── FRAMEWORK_ANLEITUNG.md
-├── PROJEKTVORSCHLAG.md
 ├── docs/
 │   ├── Backpropagation.pdf
 │   ├── Backpropagation-1.pdf
@@ -78,6 +99,7 @@ neural-network-java/
 │   └── Matrix.pdf
 ├── src/
 │   ├── NeuralNetwork.java
+│   ├── Main.java
 │   ├── Input_layer.java
 │   ├── Intermediate_layer.java
 │   ├── Calc_weigthed_sum.java
@@ -85,8 +107,12 @@ neural-network-java/
 │   ├── Loss_Function.java
 │   ├── Gradient_Decent.java
 │   ├── Update_weights.java
-│   └── Update_biases.java
+│   ├── Update_biases.java
+│   ├── Backpropagation_last_two_layers.java   (nicht mehr verwendet)
+│   ├── Backpropafation_depth_layer.java       (nicht mehr verwendet)
+│   └── Neuron.java                            (nicht mehr verwendet)
 └── examples/
+    ├── Main_00_Quickstart.java
     ├── Main_01_XOR.java
     ├── Main_02_Temperatur.java
     ├── Main_03_MiniMNIST.java
@@ -156,7 +182,7 @@ public class Main_00_Quickstart {
 
         // ── SCHRITT 4: Ergebnisse ausgeben ──────────────────────────
         // printPredictions zeigt für jeden Input:
-        //   Input | Erwartet | Vorhergesagt | Gerundet | ✓/✗
+        //   Input | Erwartet | Vorhergesagt | Gerundet
 
         net.printPredictions(inputs, expected);
 
@@ -164,7 +190,7 @@ public class Main_00_Quickstart {
         // ── SCHRITT 5: Loss-Verlauf ausgeben ────────────────────────
         // Zeigt wie sich der Fehler über die Epochen entwickelt hat.
         // Ein gleichmäßig sinkender Loss = Netz lernt gut.
-        // Ein stagnierender Loss = lokales Minimum, neu starten.
+        // Bleibt der Loss bei ~0.69 (= ln 2) stehen, gibt das Netz überall ~0.5 aus.
 
         net.printLossHistory();
 
@@ -205,7 +231,7 @@ Echte Bildklassifikation ohne Bibliotheken.
 ### 4. 3D Punktwolken
 3 kontinuierliche Inputs (x, y, z), 4 Cluster in Würfelecken.  
 Testet geometrische Klassifikation im kontinuierlichen Raum.  
-Der Mittelpunkt (0.5, 0.5, 0.5) hat absichtlich keine richtige Antwort — niedrige Konfidenz dort ist das korrekte Verhalten.
+Der Mittelpunkt (0.5, 0.5, 0.5) liegt gleich weit von allen Clustern entfernt und hat keine richtige Antwort. Welche Klasse und welche Konfidenz das Netz dort ausgibt, ist je nach zufälliger Initialisierung bei jedem Lauf anders.
 
 ---
 

@@ -1,3 +1,11 @@
+// ============================================================
+// KI-KENNZEICHNUNG
+// Dieses Beispiel (Trainingsdaten, Aufbau, Ausgabe) wurde von
+// Claude generiert, um das selbst geschriebene Framework auf
+// einem konkreten Problem zu demonstrieren.
+// Siehe README.md → "Transparenz".
+// ============================================================
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -56,7 +64,7 @@ public class Main_00_Quickstart {
 
         // ── SCHRITT 4: Ergebnisse ausgeben ──────────────────────────
         // printPredictions zeigt für jeden Input:
-        //   Input | Erwartet | Vorhergesagt | Gerundet | ✓/✗
+        //   Input | Erwartet | Vorhergesagt | Gerundet
 
         net.printPredictions(inputs, expected);
 
@@ -64,7 +72,7 @@ public class Main_00_Quickstart {
         // ── SCHRITT 5: Loss-Verlauf ausgeben ────────────────────────
         // Zeigt wie sich der Fehler über die Epochen entwickelt hat.
         // Ein gleichmäßig sinkender Loss = Netz lernt gut.
-        // Ein stagnierender Loss = lokales Minimum, neu starten.
+        // Bleibt der Loss bei ~0.69 (= ln 2) stehen, gibt das Netz überall ~0.5 aus.
 
         net.printLossHistory();
 

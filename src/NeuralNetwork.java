@@ -1,3 +1,17 @@
+// ============================================================
+// KI-KENNZEICHNUNG
+// Diese Klasse wurde mit KI-Unterstützung (Claude) erstellt.
+// Sie fasst die selbst geschriebenen Klassen (Input_layer,
+// Intermediate_layer, Calc_weigthed_sum, Activations_functions,
+// Loss_Function, Gradient_Decent, Update_weights, Update_biases)
+// zu einem generischen Netz zusammen und enthält die Trainings-
+// schleife mit Backpropagation.
+// predict(), printPredictions() und die format-Hilfsfunktionen
+// wurden am 30.09.2026 von Claude überarbeitet (alle Output-
+// Neuronen statt nur dem ersten).
+// Siehe README.md → "Transparenz".
+// ============================================================
+
 import java.util.ArrayList;
 
 public class NeuralNetwork {

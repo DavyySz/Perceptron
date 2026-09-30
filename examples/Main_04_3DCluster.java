@@ -1,3 +1,11 @@
+// ============================================================
+// KI-KENNZEICHNUNG
+// Dieses Beispiel (Trainingsdaten, Aufbau, Ausgabe) wurde von
+// Claude generiert, um das selbst geschriebene Framework auf
+// einem konkreten Problem zu demonstrieren.
+// Siehe README.md → "Transparenz".
+// ============================================================
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -84,7 +92,7 @@ public class Main_04_3DCluster {
                 predicted, names[predicted], conf, result);
         }
         System.out.println("\nHinweis: (0.5,0.5,0.5) hat keine richtige Antwort —");
-        System.out.println("niedrige Konfidenz dort wäre das korrekte Verhalten.");
+        System.out.println("die Ausgabe dort ist je nach Initialisierung bei jedem Lauf anders.");
         net.printLossHistory();
     }
 
